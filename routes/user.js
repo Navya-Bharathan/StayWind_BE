@@ -13,7 +13,7 @@ const {
 
 userRouter.route("/:id",verifyUser).get(getUser).put(updateUser).delete(deleteUser);
 
-userRouter.get("/", getUsers)
+userRouter.get("/", verifyAdmin,getUsers)
 
 
 module.exports={
