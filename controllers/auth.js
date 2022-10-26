@@ -1,5 +1,5 @@
 const {User}=require("../models/user");
-const {Owner}=require("../models/owner");
+//const {Owner}=require("../models/owner");
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 const { errorHandler } = require("../utils/errorHandler");
@@ -27,7 +27,7 @@ const signup= async (req,res,next) => {
 
                 //get the values from the registration page
                 const newUser=await User.create({
-                    firstname:req.body.firstname,
+                    firstName:req.body.firstname,
                     lastName:req.body.lastname,
                     email:req.body.email,
                     password:hashedPassword
@@ -35,10 +35,9 @@ const signup= async (req,res,next) => {
                 })
                //delete newUser.password;
             //if not save the new user
-            const token=jwt.sign(newUser.toJSON(),process.env.JWT_TOKEN)
-            res.json({token})
-        
-                //res.status(201).json(newUser);
+            //const token=jwt.sign(newUser.toJSON(),process.env.JWT_TOKEN)
+            //res.json({token})
+            res.status(201).json(newUser);
         
             }
             catch(error){
@@ -65,14 +64,14 @@ const login=async (req,res,next) =>{
     
     
     const token=jwt.sign(user.toJSON(),process.env.JWT_TOKEN)
-    res.json({token})
+   // res.json({token})
 
 
-   res.status(200).json(user);
+   res.status(200).json({data:token,message:"User logged successfully"});
 
     }
     catch(error){
-        throw(error)
+        res.status(500).send({message:error.message});
     }
 };
 

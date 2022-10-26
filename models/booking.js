@@ -16,7 +16,7 @@ const bookingDetailsSchema=new Schema({
         required:true
     
     },
-    noOfRooms:{
+   /* noOfRooms:{
         type:Number,
         required:true
     },
@@ -24,7 +24,7 @@ const bookingDetailsSchema=new Schema({
          type:Number,
          required:true
     }
-   
+   */
 }) 
 const Cart=model("Cart",cartSchema);
 

@@ -29,11 +29,46 @@ const updateProperty = async(req,res,next) =>{
 }
 const getProperties = async(req,res,next) =>{            //get all the properties
     try{
-        const properties=await Property.find({});
-        res.json(properties);
+        const page=parseInt(req.query.page)-1 ||0; //for pagination
+        const limit=parseInt(req.query.limit) || 6;  //set limit for each items in the page
+        const search=req.query.search||"";
+        let sort=req.query.sort||"price";
+        let keyword=req.query.keyword ;
+        //let allProperties=[];
+
+       /* const keywordOptions=[
+            "wedding",
+            "kid friendly",
+            "luxurious",
+            "breakfast"
+        ]*/
+             //sort
+             let sortBy={};
+             req.query.sort?(sort=req.query.sort.split(",")):(sort=[sort]);
+           
+ 
+             if(sort[1]){    //user specify sorting order
+                 sortBy[sort[0]]=sort[1];
+             }else{
+                 sortBy[sort[0]]='asc';
+             }
+            //check with keyword
+            if (!keyword) {
+                allProperties = await Property.find({}).sort(sortBy)//.skip(page*limit);
+                return res.status(200).json(allProperties)
+            } else {
+                 keyword = req.query.keyword.split(",")
+                 allProperties = await Property.find().where("keyword").in(keyword).sort(sortBy)//.skip(page*limit);;
+                 res.status(200).json(allProperties)
+            }
+           
+            /*const allProperties= await Property.find({location:{$regex:search,$options:"i"}})
+            .where(keyword).in(keyword).sort(sortBy).skip(page*limit)
+             */
+            //res.status(200).json(allProperties)
     }
     catch(error){
-        res.json({message:error.message});
+        res.status(500).json({message:error.message});  //add error:true as param
     }
     
 }

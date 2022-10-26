@@ -31,7 +31,7 @@ app.use("/auth",authRouter);
 
 
 app.use((err,req,res,next)=>{
-    return res.status(500).json(err.message)
+    return next(errorHandler(400,err.message));
 })
 
 app.listen(port,()=>{
