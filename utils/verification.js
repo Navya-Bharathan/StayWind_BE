@@ -20,31 +20,31 @@ const verifyToken=(req,res,next)=>{
 
 
 const verifyUser=(req,res,next)=>{
-    verifyToken(req,res,next,()=>{
+    verifyToken(req,res,next)
         if(req.user.id===req.params.id || req.user.isAdmin) {
         next()
         }else{
           return next(errorHandler(403,"Please Login"));
-        }
-    })
+        }   
 }
 const verifyOwner=(req,res,next)=>{
-    verifyToken(req,res,next,()=>{
-        if(req.user.id===req.params.id || req.user.isAdmin) {
+    verifyToken(req,res,next)
+        
+    if(req.user.id===req.params.id || req.user.isAdmin) {
         next()
         }else{
           return next(errorHandler(403,"You are not authorized"));
         }
-    })
 }
 const verifyAdmin=(req,res,next)=>{
-    verifyToken(req,res,next,()=>{
-        if(req.user.isAdmin) {
+
+    verifyToken(req,res,next);
+    if(req.user.isAdmin){
         next()
-        }else{
-          return next(errorHandler(403,"Please Login as an Admin"));
-        }
-    })
+    }else{
+        return next(errorHandler(403,"Please Login as an Admin"));
+    }
+
 }
 module.exports={
     verifyToken,

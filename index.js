@@ -16,7 +16,7 @@ require('./controllers/auth');
 
 const app=express();
 
-const port=process.env.PORT || 3100;
+const port=process.env.PORT || 3200;
 
 //middlewares
 app.use(express.json());
