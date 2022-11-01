@@ -5,7 +5,7 @@ const propertySchema=new Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"Owner",
          required:true},*/
-    propertyId:{type:String, unique:true,required:true},
+    //propertyId:{type:String},
     name:{type:String, required:true},
     type:{type:String, required:true},
     location:{type:String,required:true},

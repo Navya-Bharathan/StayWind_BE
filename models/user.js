@@ -13,6 +13,7 @@ const userSchema=new Schema({
     phoneNumber:{type:Number},
     isAdmin:{type:Boolean,default:false},
     isOwner:{type:Boolean,default:false}
+    
 });
 const User=model("User",userSchema);
 

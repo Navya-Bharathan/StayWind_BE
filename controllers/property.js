@@ -1,14 +1,39 @@
 const {Property} =require("../models/property");
+//const cloudinary=require("../controllers/cloudinary");
+
+//const {uploadedImage}=require("./cloudinary");
+
+const cloudinary=require("../cloudinary/cloudinary");
+
 
 const addNewProperty = async(req,res,next) =>{
-    try{
-        const {body} =req;
-        const property=await Property.create(body);
+    //console.log(req.body.image);
+    console.log("1");
+    const {image}=req.body;
+    const uploadedImage=await cloudinary.uploader.upload(image,
+        {
+          upload_preset: "staywind-property",
+          allowed_formats: ["png", "jpg", "jpeg", "svg", "ico", "jfif", "webp"],
+        },
+    async function (error, result) {
+          if (error) {
+            console.log(error);
+          }
+          console.log(result);
+          const property=await Property.create({
+            name:req.body.name,
+            type:req.body.type,
+            location:req.body.location,
+            address:req.body.address,
+            pincode:req.body.pincode,
+            country:req.body.country,
+            keyword:req.body.keyword,
+            images:[result.url]
+
+        });
         res.json(property);
-    }
-    catch(error){
-        res.json({message:error.message});
-    }
+        })
+    
 
 };
 
@@ -43,7 +68,7 @@ const getProperties = async(req,res,next) =>{            //get all the propertie
             "breakfast"
         ]*/
              //sort
-             let sortBy={};
+            let sortBy={};
              req.query.sort?(sort=req.query.sort.split(",")):(sort=[sort]);
            
  

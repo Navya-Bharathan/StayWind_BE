@@ -1,5 +1,17 @@
 const express=require('express');
+//const multer=require('multer');
 
+
+/*const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+})
+const upload = multer({ storage })
+*/
 const {
     addNewProperty,
     updateProperty,
@@ -10,7 +22,8 @@ const {
 
 const propertyRouter=express.Router();
 
-propertyRouter.route("/").get(getProperties).post(addNewProperty);
+propertyRouter.route("/").get(getProperties)
+propertyRouter.route("/uploadProperty").post(addNewProperty);
 propertyRouter.route("/:id").get(getProperty).put(updateProperty).delete(deleteProperty);
 
 

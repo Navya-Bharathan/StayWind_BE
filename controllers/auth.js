@@ -2,6 +2,7 @@ const {User}=require("../models/user");
 //const {Owner}=require("../models/owner");
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
+
 const { errorHandler } = require("../utils/errorHandler");
 const { updateUser } = require("./user");
 
@@ -12,6 +13,7 @@ const signup= async (req,res,next) => {
 
             //console.log(req.body);
             try{
+
 
                 //check whether the user already exist 
                 const found=await User.findOne({email:req.body.email})
@@ -37,7 +39,7 @@ const signup= async (req,res,next) => {
             //if not save the new user
             //const token=jwt.sign(newUser.toJSON(),process.env.JWT_TOKEN)
             //res.json({token})
-            res.status(201).json(newUser);
+            res.status(201).send();
         
             }
             catch(error){
